@@ -1,0 +1,48 @@
+# Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
+
+version: '3'
+
+services:
+  app:   
+    container_name: zippo-app
+    build:
+      context: . 
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" 
+    restart: unless-stopped
+    environment: 
+      HOST: "0.0.0.0"
+      PORT: 8080
+      TIMEOUT: 30
+      DATABASE_HOST: db
+      DATABASE_USERNAME: zippoapps
+      DATABASE_PASSWORD: zippoapps
+      DATABASE_NAME: zippoapps    
+      DATABASE_PORT: 5432
+      CACHE_TTL: 10    
+    networks: 
+      - backend
+    links:
+      - db
+    depends_on:
+      - db
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=zippoapps
+      - POSTGRES_PASSWORD=zippoapps
+      - POSTGRES_DB=zippoapps
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+    networks: 
+      - backend
+volumes:
+  db:
+    driver: local
+    
+networks:
+  backend:    

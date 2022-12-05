@@ -1,0 +1,36 @@
+linters:
+  enable-all: true
+  disable:
+    - dupl
+    - funlen
+    - gochecknoglobals
+    - lll
+    - scopelint
+    - varnamelen
+    - wrapcheck
+    - ireturn
+    - paralleltest
+    - exhaustruct
+    - ifshort
+    - goerr113
+    - gci
+    - errcheck
+    - golint
+    - noctx
+    - forcetypeassert
+    - gomnd
+    - exhaustivestruct
+    - revive
+    - forbidigo
+    - errorlint
+    - gofumpt
+    - maligned
+
+
+linters-settings:
+  govet:
+    check-shadowing: true
+  maligned:
+    suggest-new: true
+  misspell:
+    locale: US
